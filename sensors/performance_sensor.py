@@ -10,11 +10,6 @@
 #
 ########################################################################
 
-from plexxiconnect import utils
-from plexxiconnect.db import pack_config
-from plexxiconnect.db.cache import kubernetes_cache
-from plexxiconnect.db.model import meta
-from plexxiconnect.debug import eventlet_debug
 from st2reactor.sensor.base import PollingSensor
 
 
@@ -44,11 +39,6 @@ class PerformanceSensor(PollingSensor):
                                                 poll_interval=poll_interval)
 
         self._logger = self._sensor_service.get_logger(name=self.__class__.__name__)
-        self._kubernetes_cache = None
-        self._pack_config = None
-
-        if eventlet_debug.enabled():
-            eventlet_debug.log_configuration(self._logger)
 
     def setup(self, dsn=None):
         """Initialize the sensor.
@@ -57,13 +47,6 @@ class PerformanceSensor(PollingSensor):
             dsn (str): Data Source Name, connection information for the database
         """
         self._logger.debug('Sensor setup()')
-        meta.configure_db()
-
-        self._kubernetes_cache = kubernetes_cache.KubernetesCache(dsn=dsn, logger=self._logger)
-        self._pack_config = pack_config.PackConfig(logger=self._logger, dsn=dsn)
-
-        for config in utils.get_enabled_configs(self.config):
-            self._logger.debug(config)
 
         self.sensor_service.dispatch(
             trigger=self.PERFORMANCE_1_TRIGGER,
