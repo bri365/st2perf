@@ -1,0 +1,39 @@
+---
+class_name: "PerformanceSensor"
+entry_point: "performance_sensor.py"
+description: "Performance polling sensor"
+poll_interval: 10
+enabled: true
+trigger_types:
+  -
+    name: "performance_1"
+    description: "Performance trigger 1"
+    payload_schema:
+      type: "object"
+      properties:
+        seconds:
+          type: number
+  -
+    name: "performance_2"
+    description: "Performance trigger 2"
+    payload_schema:
+      type: "object"
+      properties:
+        seconds:
+          type: number
+  -
+    name: "performance_3"
+    description: "Performance trigger 3"
+    payload_schema:
+      type: "object"
+      properties:
+        seconds:
+          type: number
+  -
+    name: "performance_4"
+    description: "Performance trigger 4"
+    payload_schema:
+      type: "object"
+      properties:
+        seconds:
+          type: number

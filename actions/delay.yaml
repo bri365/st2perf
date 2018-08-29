@@ -1,0 +1,10 @@
+description: 'Delay n seconds'
+enabled: true
+entry_point: delay.py
+name: delay
+runner_type: "python-script"
+parameters:
+  seconds:
+    type: number
+    description: seconds to delay (integer or decimal)
+    required: true

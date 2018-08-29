@@ -1,0 +1,121 @@
+---
+  chain:
+    -
+      name: "delay1"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay2"
+    -
+      name: "delay2"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay3"
+    -
+      name: "delay3"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay4"
+    -
+      name: "delay4"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay5"
+    -
+      name: "delay5"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay6"
+    -
+      name: "delay6"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay7"
+    -
+      name: "delay7"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay8"
+    -
+      name: "delay8"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay9"
+    -
+      name: "delay9"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay10"
+    -
+      name: "delay10"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay11"
+    -
+      name: "delay11"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay12"
+    -
+      name: "delay12"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay13"
+    -
+      name: "delay13"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay14"
+    -
+      name: "delay14"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay15"
+    -
+      name: "delay15"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay16"
+    -
+      name: "delay16"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay17"
+    -
+      name: "delay17"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay18"
+    -
+      name: "delay18"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay19"
+    -
+      name: "delay19"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
+      on-success: "delay20"
+    -
+      name: "delay20"
+      ref: "performance.delay"
+      parameters:
+        seconds: 1.5
