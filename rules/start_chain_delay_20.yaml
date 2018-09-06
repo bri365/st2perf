@@ -1,0 +1,13 @@
+---
+  name: "start_chain_delay_20"
+  pack: "performance"
+  description: "Start chain performance test"
+  enabled: true
+
+  trigger:
+    type: "performance.chain_delay"
+
+  action:
+    ref: "performance.chain_delay_20"
+    parameters:
+      seconds: "{{trigger.seconds}}"

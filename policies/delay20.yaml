@@ -1,0 +1,9 @@
+---
+  name: delay20.concurrency
+  description: Limit delay20 to run one at a time
+  enabled: false
+  resource_ref: performance.delay20
+  policy_type: action.concurrency
+  parameters:
+    threshold: 1
+

@@ -1,6 +1,0 @@
----
-description: "Delay 20 times 1.5 seconds"
-enabled: true
-entry_point: "workflows/delay20_1_5.yaml"
-name: "delay20_1_5"
-runner_type: "action-chain"

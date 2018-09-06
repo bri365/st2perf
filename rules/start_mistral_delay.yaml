@@ -1,0 +1,15 @@
+---
+  name: "start_mistral_delay"
+  pack: "performance"
+  description: "Start delay test"
+  enabled: true
+
+  trigger:
+    type: "performance.mistral_delay"
+
+  action:
+    ref: "performance.mistral_delay"
+    parameters:
+      seconds: "{{trigger.seconds}}"
+      iterations: "{{trigger.iterations}}"
+      concurrency: "{{trigger.concurrency}}"

@@ -10,21 +10,15 @@
 #
 ########################################################################
 
+import glob
+import json
+import os
+
 from st2reactor.sensor.base import PollingSensor
 
 
 class PerformanceSensor(PollingSensor):
     """Sensor for performance testing."""
-
-    # Trigger definitions
-    PERFORMANCE_1 = 'performance_1'
-    PERFORMANCE_1_TRIGGER = 'performance.{}'.format(PERFORMANCE_1)
-    PERFORMANCE_2 = 'performance_2'
-    PERFORMANCE_2_TRIGGER = 'performance.{}'.format(PERFORMANCE_2)
-    PERFORMANCE_3 = 'performance_3'
-    PERFORMANCE_3_TRIGGER = 'performance.{}'.format(PERFORMANCE_3)
-    PERFORMANCE_4 = 'performance_4'
-    PERFORMANCE_4_TRIGGER = 'performance.{}'.format(PERFORMANCE_4)
 
     def __init__(self, sensor_service, config=None, poll_interval=None):
         """Initialize.
@@ -39,6 +33,7 @@ class PerformanceSensor(PollingSensor):
                                                 poll_interval=poll_interval)
 
         self._logger = self._sensor_service.get_logger(name=self.__class__.__name__)
+        self.base_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
     def setup(self, dsn=None):
         """Initialize the sensor.
@@ -46,31 +41,48 @@ class PerformanceSensor(PollingSensor):
         Arguments:
             dsn (str): Data Source Name, connection information for the database
         """
-        self._logger.debug('Sensor setup()')
-
-        self.sensor_service.dispatch(
-            trigger=self.PERFORMANCE_1_TRIGGER,
-            payload={'seconds': 0.1},
-            trace_tag=self.PERFORMANCE_1)
-
-        self.sensor_service.dispatch(
-            trigger=self.PERFORMANCE_2_TRIGGER,
-            payload={'seconds': 1.1},
-            trace_tag=self.PERFORMANCE_2)
-
-        self.sensor_service.dispatch(
-            trigger=self.PERFORMANCE_3_TRIGGER,
-            payload={'seconds': 1.1},
-            trace_tag=self.PERFORMANCE_3)
-
-        self.sensor_service.dispatch(
-            trigger=self.PERFORMANCE_4_TRIGGER,
-            payload={'seconds': 1.1},
-            trace_tag=self.PERFORMANCE_4)
+        for f in glob.glob('{}/run_*'.format(self.base_path)):
+            os.remove(f)
 
     def poll(self):
         """Poll cycle."""
-        pass
+        for f in glob.glob('{}/run_*'.format(self.base_path)):
+            if 'run_action.ok' in f:
+                seconds, iterations, concurrency = self.get_run_params(os.path.splitext(f)[0])
+                self.sensor_service.dispatch(
+                    trigger="performance.action_delay",
+                    payload={'seconds': seconds})
+            if 'run_chain.ok' in f:
+                seconds, iterations, concurrency = self.get_run_params(os.path.splitext(f)[0])
+                self.sensor_service.dispatch(
+                    trigger="performance.chain_delay",
+                    payload={'seconds': seconds})
+            if 'run_mistral.ok' in f:
+                seconds, iterations, concurrency = self.get_run_params(os.path.splitext(f)[0])
+                self.sensor_service.dispatch(
+                    trigger="performance.mistral_delay",
+                    payload={'seconds': seconds,
+                             'iterations': iterations,
+                             'concurrency': concurrency})
+
+    @staticmethod
+    def get_run_params(file_name):
+        """Get parameters from run file."""
+        try:
+            with open(file_name) as run_file:
+                data = json.load(run_file)
+            seconds = data.get('seconds', 0)
+            iterations = data.get('iterations', 1)
+            concurrency = data.get('concurrency', 1)
+        except ValueError:
+            seconds = 0
+            iterations = 1
+            concurrency = 1
+
+        os.remove(file_name)
+        os.remove('{}.ok'.format(file_name))
+
+        return seconds, iterations, concurrency
 
     def cleanup(self):
         """Run when sensor is shutdown."""

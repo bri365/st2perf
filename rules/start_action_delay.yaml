@@ -1,0 +1,13 @@
+---
+  name: "start_action_delay"
+  pack: "performance"
+  description: "Start delay action"
+  enabled: true
+
+  trigger:
+    type: "performance.action_delay"
+
+  action:
+    ref: "performance.delay"
+    parameters:
+      seconds: "{{trigger.seconds}}"

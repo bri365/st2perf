@@ -1,0 +1,10 @@
+---
+description: "Delay 20 times x seconds"
+enabled: true
+entry_point: "workflows/chain_delay_20.yaml"
+name: "chain_delay_20"
+runner_type: "action-chain"
+parameters:
+  seconds:
+    type: string
+    required: true
