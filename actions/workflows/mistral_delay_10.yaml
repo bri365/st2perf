@@ -1,0 +1,68 @@
+version: "2.0"
+name: "performance.mistral_delay_10"
+description: "delay 10 times for [seconds] in a chain"
+
+workflows:
+  main:
+    type: direct
+    input:
+      - seconds
+    tasks:
+      delay1:
+        action: 'performance.delay'
+        input:
+          seconds: <% $.seconds %>
+        on-success:
+          - delay2
+      delay2:
+        action: 'performance.delay'
+        input:
+          seconds: <% $.seconds %>
+        on-success:
+          - delay3
+      delay3:
+        action: 'performance.delay'
+        input:
+          seconds: <% $.seconds %>
+        on-success:
+          - delay4
+      delay4:
+        action: 'performance.delay'
+        input:
+          seconds: <% $.seconds %>
+        on-success:
+          - delay5
+      delay5:
+        action: 'performance.delay'
+        input:
+          seconds: <% $.seconds %>
+        on-success:
+          - delay6
+      delay6:
+        action: 'performance.delay'
+        input:
+          seconds: <% $.seconds %>
+        on-success:
+          - delay7
+      delay7:
+        action: 'performance.delay'
+        input:
+          seconds: <% $.seconds %>
+        on-success:
+          - delay8
+      delay8:
+        action: 'performance.delay'
+        input:
+          seconds: <% $.seconds %>
+        on-success:
+          - delay9
+      delay9:
+        action: 'performance.delay'
+        input:
+          seconds: <% $.seconds %>
+        on-success:
+          - delay10
+      delay10:
+        action: 'performance.delay'
+        input:
+          seconds: <% $.seconds %>

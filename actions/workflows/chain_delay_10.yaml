@@ -1,0 +1,61 @@
+---
+  chain:
+    -
+      name: "delay1"
+      ref: "performance.delay"
+      parameters:
+        seconds: "{{seconds}}"
+      on-success: "delay2"
+    -
+      name: "delay2"
+      ref: "performance.delay"
+      parameters:
+        seconds: "{{seconds}}"
+      on-success: "delay3"
+    -
+      name: "delay3"
+      ref: "performance.delay"
+      parameters:
+        seconds: "{{seconds}}"
+      on-success: "delay4"
+    -
+      name: "delay4"
+      ref: "performance.delay"
+      parameters:
+        seconds: "{{seconds}}"
+      on-success: "delay5"
+    -
+      name: "delay5"
+      ref: "performance.delay"
+      parameters:
+        seconds: "{{seconds}}"
+      on-success: "delay6"
+    -
+      name: "delay6"
+      ref: "performance.delay"
+      parameters:
+        seconds: "{{seconds}}"
+      on-success: "delay7"
+    -
+      name: "delay7"
+      ref: "performance.delay"
+      parameters:
+        seconds: "{{seconds}}"
+      on-success: "delay8"
+    -
+      name: "delay8"
+      ref: "performance.delay"
+      parameters:
+        seconds: "{{seconds}}"
+      on-success: "delay9"
+    -
+      name: "delay9"
+      ref: "performance.delay"
+      parameters:
+        seconds: "{{seconds}}"
+      on-success: "delay10"
+    -
+      name: "delay10"
+      ref: "performance.delay"
+      parameters:
+        seconds: "{{seconds}}"

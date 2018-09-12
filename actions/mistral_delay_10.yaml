@@ -1,0 +1,11 @@
+---
+description: "Delay 10 times via mistral workflow"
+enabled: true
+entry_point: "workflows/mistral_delay_10.yaml"
+name: "mistral_delay_10"
+pack: "performance"
+runner_type: "mistral-v2"
+parameters:
+  seconds:
+    type: number
+    required: true
