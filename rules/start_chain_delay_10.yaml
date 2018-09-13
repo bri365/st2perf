@@ -1,5 +1,5 @@
 ---
-  name: "start_chain_delay_20"
+  name: "start_chain_delay_10"
   pack: "performance"
   description: "Start chain performance test"
   enabled: true
@@ -10,9 +10,9 @@
   criteria:
     trigger.iterations:
       type: "equals"
-      pattern : 20
+      pattern : 10
 
   action:
-    ref: "performance.chain_delay_20"
+    ref: "performance.chain_delay_10"
     parameters:
       seconds: "{{trigger.seconds}}"

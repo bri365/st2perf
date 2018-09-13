@@ -21,6 +21,8 @@ trigger_types:
       properties:
         seconds:
           type: number
+        iterations:
+          type: integer
   -
     name: "mistral_delay"
     description: "Mistral delay performance test"
@@ -33,3 +35,5 @@ trigger_types:
           type: integer
         concurrency:
           type: integer
+        chain:
+          type: boolean

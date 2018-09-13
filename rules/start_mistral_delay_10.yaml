@@ -1,5 +1,5 @@
 ---
-  name: "start_mistral_delay"
+  name: "start_mistral_delay_10"
   pack: "performance"
   description: "Start delay test"
   enabled: true
@@ -10,11 +10,12 @@
   criteria:
     trigger.chain:
       type: "equals"
-      pattern : false
+      pattern : true
+    trigger.iterations:
+      type: "equals"
+      pattern : 10
 
   action:
-    ref: "performance.mistral_delay"
+    ref: "performance.mistral_delay_10"
     parameters:
       seconds: "{{trigger.seconds}}"
-      iterations: "{{trigger.iterations}}"
-      concurrency: "{{trigger.concurrency}}"

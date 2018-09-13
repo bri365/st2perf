@@ -48,25 +48,27 @@ class PerformanceSensor(PollingSensor):
         """Poll cycle."""
         for f in glob.glob('{}/run_*'.format(self.base_path)):
             if 'run_action.ok' in f:
-                seconds, iterations, concurrency = self.get_run_params(os.path.splitext(f)[0])
+                seconds, iterations, concurrency, chain = self.get_params(os.path.splitext(f)[0])
                 self.sensor_service.dispatch(
                     trigger="performance.action_delay",
                     payload={'seconds': seconds})
             if 'run_chain.ok' in f:
-                seconds, iterations, concurrency = self.get_run_params(os.path.splitext(f)[0])
+                seconds, iterations, concurrency, chain = self.get_params(os.path.splitext(f)[0])
                 self.sensor_service.dispatch(
                     trigger="performance.chain_delay",
-                    payload={'seconds': seconds})
+                    payload={'seconds': seconds,
+                             'iterations': iterations})
             if 'run_mistral.ok' in f:
-                seconds, iterations, concurrency = self.get_run_params(os.path.splitext(f)[0])
+                seconds, iterations, concurrency, chain = self.get_params(os.path.splitext(f)[0])
                 self.sensor_service.dispatch(
                     trigger="performance.mistral_delay",
                     payload={'seconds': seconds,
                              'iterations': iterations,
-                             'concurrency': concurrency})
+                             'concurrency': concurrency,
+                             'chain': chain})
 
     @staticmethod
-    def get_run_params(file_name):
+    def get_params(file_name):
         """Get parameters from run file."""
         try:
             with open(file_name) as run_file:
@@ -74,15 +76,17 @@ class PerformanceSensor(PollingSensor):
             seconds = data.get('seconds', 0)
             iterations = data.get('iterations', 1)
             concurrency = data.get('concurrency', 1)
+            chain = data.get('chain', False)
         except ValueError:
             seconds = 0
             iterations = 1
             concurrency = 1
+            chain = False
 
         os.remove(file_name)
         os.remove('{}.ok'.format(file_name))
 
-        return seconds, iterations, concurrency
+        return seconds, iterations, concurrency, chain
 
     def cleanup(self):
         """Run when sensor is shutdown."""
