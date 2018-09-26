@@ -48,24 +48,24 @@ class PerformanceSensor(PollingSensor):
         """Poll cycle."""
         for f in glob.glob('{}/run_*'.format(self.base_path)):
             if 'run_action.ok' in f:
-                seconds, iterations, concurrency, chain = self.get_params(os.path.splitext(f)[0])
+                seconds, iterations, concurrency, mode = self.get_params(os.path.splitext(f)[0])
                 self.sensor_service.dispatch(
                     trigger="performance.action_delay",
                     payload={'seconds': seconds})
             if 'run_chain.ok' in f:
-                seconds, iterations, concurrency, chain = self.get_params(os.path.splitext(f)[0])
+                seconds, iterations, concurrency, mode = self.get_params(os.path.splitext(f)[0])
                 self.sensor_service.dispatch(
                     trigger="performance.chain_delay",
                     payload={'seconds': seconds,
                              'iterations': iterations})
             if 'run_mistral.ok' in f:
-                seconds, iterations, concurrency, chain = self.get_params(os.path.splitext(f)[0])
+                seconds, iterations, concurrency, mode = self.get_params(os.path.splitext(f)[0])
                 self.sensor_service.dispatch(
                     trigger="performance.mistral_delay",
                     payload={'seconds': seconds,
                              'iterations': iterations,
                              'concurrency': concurrency,
-                             'chain': chain})
+                             'mode': mode})
 
     @staticmethod
     def get_params(file_name):
@@ -76,17 +76,17 @@ class PerformanceSensor(PollingSensor):
             seconds = data.get('seconds', 0)
             iterations = data.get('iterations', 1)
             concurrency = data.get('concurrency', 1)
-            chain = data.get('chain', False)
+            mode = data.get('mode', 'list')
         except ValueError:
             seconds = 0
             iterations = 1
             concurrency = 1
-            chain = False
+            mode = 'list'
 
         os.remove(file_name)
         os.remove('{}.ok'.format(file_name))
 
-        return seconds, iterations, concurrency, chain
+        return seconds, iterations, concurrency, mode
 
     def cleanup(self):
         """Run when sensor is shutdown."""

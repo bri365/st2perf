@@ -35,5 +35,5 @@ trigger_types:
           type: integer
         concurrency:
           type: integer
-        chain:
-          type: boolean
+        mode:
+          type: string

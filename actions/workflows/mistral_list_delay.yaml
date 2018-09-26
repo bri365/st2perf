@@ -1,0 +1,26 @@
+version: "2.0"
+name: "performance.mistral_list_delay"
+description: "delay [iteration] times for [seconds] in a chain"
+
+workflows:
+  main:
+    type: direct
+    input:
+      - seconds
+      - iterations
+    tasks:
+      get_list:
+        action: 'performance.delay_list'
+        input:
+          seconds: <% $.seconds %>
+          iterations: <% $.iterations %>
+        publish:
+          delay_list: <% task(get_list).result.result %>
+        on-success:
+          - delay: <% $.delay_list != [] %>
+
+      delay:
+        with-items: delay in <% $.delay_list %>
+        action: 'performance.delay'
+        input:
+          seconds: <% $.delay %>

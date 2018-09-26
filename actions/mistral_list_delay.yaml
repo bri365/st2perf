@@ -1,0 +1,14 @@
+---
+description: "Delay via mistral workflow"
+enabled: true
+entry_point: "workflows/mistral_list_delay.yaml"
+name: "mistral_list_delay"
+pack: "performance"
+runner_type: "mistral-v2"
+parameters:
+  seconds:
+    type: number
+    required: true
+  iterations:
+    type: integer
+    required: true

@@ -1,0 +1,16 @@
+version: "2.0"
+name: "performance.mistral_parallel_delay"
+description: "delay [iteration] times for [seconds] in a chain"
+
+workflows:
+  main:
+    type: direct
+    input:
+      - seconds
+      - iterations
+    tasks:
+      repeat:
+        with-items: i in <% list(range(0, $.iterations)) %>
+        action: 'performance.delay'
+        input:
+          seconds: <% $.seconds %>

@@ -1,0 +1,12 @@
+description: 'Create a list of delay values'
+enabled: true
+entry_point: delay_list.py
+name: delay_list
+runner_type: "python-script"
+parameters:
+  seconds:
+    type: number
+    required: true
+  iterations:
+    type: integer
+    required: true

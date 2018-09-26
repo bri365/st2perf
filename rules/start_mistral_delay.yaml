@@ -8,9 +8,12 @@
     type: "performance.mistral_delay"
 
   criteria:
-    trigger.chain:
+    trigger.mode:
       type: "equals"
-      pattern : false
+      pattern : "repeat"
+    trigger.concurrency:
+      type: "nequals"
+      pattern : 0
 
   action:
     ref: "performance.mistral_delay"
